@@ -81,10 +81,10 @@ if __name__ == '__main__':
           first_name                   --type String(length=100)
         , last_name as alias           --type String(length=100)
         , dob                          --type Date
-        , CASE WHEN tiger_skills = 10
-               THEN tiger_skills       --Random comment should be ignored
-               ELSE tiger_skills
-               END as tiger_skills     --type Float
+        , CASE WHEN tiger_skills > 0.8
+               THEN 1              
+               ELSE 0
+               END as binary_tiger_skills    --type Integer
         FROM Trainer
         """
 
