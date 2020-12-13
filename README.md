@@ -1,13 +1,13 @@
 DataDock
 ===========
 
-DataDock is a simply utility that allows users to load data from different databases into a local SQLite file just by writing SQL. 
+DataDock is a simply utility that allows users to load data from any database into a local SQLite file just by writing SQL. 
 
 All connection and column type information is encoded in SQL comments, such that the SQL script contains all necessary 
 metadata for connecting to source database, creating local SQLite database/tables, and inserting data. Helpful for quickly pulling 
 data from a variety of sources in preparation for further analysis. Dockerfiles are to Docker Images as DataDock scripts are to SQLite tables.
 
-Just a POC at the moment. Has some obvious code injection vulnerabilities with use of `exec()`, use with caution.
+Has some obvious code injection vulnerabilities with use of `exec()`, use with caution.
 
 Flags
 --------
