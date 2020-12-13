@@ -1,6 +1,6 @@
 import sqlalchemy as sa
 
-from helpers import extract_type_annotations, extract_flag_comment
+from datadock.helpers import extract_type_annotations, extract_flag_comment
 
 
 class Dock:

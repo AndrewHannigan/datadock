@@ -1,7 +1,11 @@
 DataDock
 ===========
 
-DataDock is simple utility for quickly loading data from a variety of data sources into a local SQLite file. All connection and column type information is encoded in SQL comments, such that the SQL code contains all necessary metadata for connecting to source database, creating local SQLite database/tables, and inserting data.  This tool is helpful for quickly pulling data from a variety of sources in preparation for further analysis.  
+DataDock is simple utility for quickly loading data from a variety of data sources into a local SQLite file. 
+All connection and column type information is encoded in SQL comments, such that the SQL code contains all necessary 
+metadata for connecting to source database, creating local SQLite database/tables, and inserting data.  
+Helpful for quickly pulling data from a variety of sources in preparation for further analysis.  Has some obvious 
+code injection vulnerabilities with use of `exec()`, use with caution.
 
 Flags
 --------
