@@ -14,4 +14,6 @@ setuptools.setup(
     url="https://github.com/andrewhannigan/datadock",
     packages=setuptools.find_packages(),
     python_requires='>=3.8',
-)
+    entry_points = {
+        'console_scripts': ['datadock=datadock.cli:main'],
+    })

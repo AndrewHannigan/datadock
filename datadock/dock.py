@@ -42,7 +42,7 @@ class Dock:
 
     def get_rows(self):
         engine = sa.create_engine(self.from_url)
-        stmt = sa.text(sql).columns(*self.table.c)
+        stmt = sa.text(self.sql).columns(*self.table.c)
 
         with engine.connect() as conn:
             result = conn.execute(stmt)
@@ -73,9 +73,9 @@ class Dock:
 
 
 if __name__ == '__main__':
-    sql = """
-        --from sqlite:///testing/tigerking.db
-        --to   sqlite:///testing/tigerking_new.db
+    test_sql = """
+        --from sqlite:////Users/andrewhannigan/PycharmProjects/datadock/tests/tigerking.db
+        --to   sqlite:////Users/andrewhannigan/PycharmProjects/datadock/tests/tigerking_new.db
         --name trainer
         SELECT
           first_name                   --type String(length=100)
@@ -88,5 +88,5 @@ if __name__ == '__main__':
         FROM Trainer
         """
 
-    d = Dock(sql)
+    d = Dock(test_sql)
     d.run()
