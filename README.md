@@ -1,11 +1,11 @@
 DataDock
 ===========
 
-DataDock is a simply utility that allows users to load data from any database into a local SQLite file just by writing SQL. 
+DataDock is a simply utility that allows users to move data between any two databases supported by SQLAlchemy.
 
 All connection and column type information is encoded in SQL comments, such that the SQL script contains all necessary 
 metadata for connecting to source database, creating local SQLite database/tables, and inserting data. Helpful for quickly pulling 
-data from a variety of sources in preparation for further analysis. Dockerfiles are to Docker Images as DataDock scripts are to SQLite tables.
+data from a variety of sources in preparation for further analysis.
 
 Has some obvious code injection vulnerabilities with use of `exec()`, use with caution.
 
@@ -28,7 +28,7 @@ Example
 --name trainer
 SELECT
   first_name                   --type String(length=100)
-, last_name as alias           --type String(length=100)
+, last_name                    --type String(length=100)
 , dob                          --type Date
 , CASE WHEN tiger_skills > 0.8
        THEN 1              
