@@ -2,3 +2,6 @@ venv
 .idea
 *.db
 *.egg-info
+secrets/secret.json
+tests2/
+Dockerfile

@@ -1,5 +1,5 @@
 import sys
-from datadock import Dock
+from datadock import Statement
 
 
 def main():
@@ -8,5 +8,5 @@ def main():
 
     with open(sys.argv[1], 'r') as f:
         sql = f.read()
-        dock = Dock(sql)
+        dock = Statement(sql)
         dock.run()

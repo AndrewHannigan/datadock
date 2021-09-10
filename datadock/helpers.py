@@ -1,6 +1,7 @@
 from sqlparse.tokens import Token
 import sqlparse
 import logging
+from typing import Optional, Mapping
 
 
 def is_flag_comment(token: Token, flag: str):
@@ -9,7 +10,7 @@ def is_flag_comment(token: Token, flag: str):
            and token.value[:len(flag)] == flag
 
 
-def extract_flag_comment(sql: str, flag: str):
+def extract_flag_comment(sql: str, flag: str) -> Optional[str]:
     assert flag[:2] == '--'
 
     stmt = sqlparse.parse(sql)[0]
@@ -19,14 +20,23 @@ def extract_flag_comment(sql: str, flag: str):
     flag_comments = [t for t in comments if is_flag_comment(t, flag)]
 
     if not flag_comments:
-        raise ValueError("No {} comment found in stmt".format(flag))
+        return None
 
     value = flag_comments[0].value[len(flag):].strip()
     return value
 
 
+def check_flag(sql: str, flag: str) -> bool:
+    res = extract_flag_comment(sql, flag)
+
+    if res is None:
+        return False
+    else:
+        return True
+
+
 # TODO: Check that every column has a --type flag
-def extract_type_annotations(sql: str):
+def extract_type_annotations(sql: str) -> Mapping[str, str]:
     stmt = sqlparse.parse(sql)[0]
     comments = [t for t in stmt.flatten() if t.ttype == Token.Comment.Single]
     logging.debug("Comments found: {}".format(comments))
