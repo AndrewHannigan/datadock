@@ -3,21 +3,13 @@ import re
 import inspect
 import logging
 
-import sqlalchemy as sa
 from datadock import Statement
-
-"""
-1. Store the directory that Dock was initialized in (__init__)
-2. Use __getattr__ to check if the incoming method call corresponds to one of the sql files 
-    a. 
-3. If so, make a new Statement object from scratch and then return that
-"""
 
 
 class Dock:
-    def __init__(self, default_source_url=None):
+    def __init__(self, default_source_url=None, directory=None):
         self.default_source_url = default_source_url
-        self.directory = os.path.dirname(inspect.stack()[1].filename)
+        self.directory = directory or os.path.dirname(inspect.stack()[1].filename)
 
         self.statements = None
 
