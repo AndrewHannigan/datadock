@@ -18,7 +18,8 @@ class Dock:
         self.reload()
 
     def reload(self):
-        self.statements = [Statement(f) for f in os.listdir(self.directory) if re.match(".*[.]sql$", f)]
+        self.statements = [Statement(os.path.join(self.directory, f))
+                           for f in os.listdir(self.directory) if re.match(".*[.]sql$", f)]
 
     def run_dag(self):
         dag_statements = [s for s in self.statements if s.has_ordering_tag()]

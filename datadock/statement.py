@@ -1,4 +1,5 @@
 import logging
+import os
 import re
 from functools import total_ordering
 
@@ -9,12 +10,13 @@ from datadock.helpers import extract_type_annotations, extract_flag_comment, che
 
 @total_ordering
 class Statement:
-    def __init__(self, filename: str):
-        self.filename = filename
-        self.name = re.sub("^[0-9][0-9]_", "", re.sub(".sql$", "", filename))
+    def __init__(self, path: str):
+        self.path = path
+        self.filename = os.path.basename(self.path)
+        self.name = re.sub("^[0-9][0-9]_", "", re.sub(".sql$", "", self.filename))
 
     def __repr__(self):
-        return f"{self.__class__.__name__}({self.filename=}, {self.name=})"
+        return f"{self.__class__.__name__}({self.path=}, {self.filename=}, {self.name=})"
 
     def __str__(self):
         return self.__repr__()
@@ -32,7 +34,7 @@ class Statement:
         return True if re.findall("^[0-9][0-9].*_", self.filename) else False
 
     def reload(self):
-        with open(self.filename, "r") as f:
+        with open(self.path, "r") as f:
             self.sql = f.read()
 
         self.source_url = extract_flag_comment(self.sql, '--source')
