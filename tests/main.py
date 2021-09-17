@@ -1,4 +1,6 @@
-from datadock import Statement
+from datadock import Dock
+import logging
 
-dock = Statement()
+logging.basicConfig(level=logging.INFO)
+dock = Dock()
 dock.test_script()

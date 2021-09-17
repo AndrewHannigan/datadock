@@ -7,6 +7,8 @@ import sqlalchemy as sa
 
 from datadock.helpers import extract_type_annotations, extract_flag_comment, check_flag
 
+logger = logging.getLogger(__name__)
+
 
 @total_ordering
 class Statement:
@@ -50,7 +52,7 @@ class Statement:
 
         engine = sa.create_engine(self.source_url)
 
-        logging.info(f"Running {self.filename}")
+        logger.info(f"Running {self.filename}")
         with engine.connect() as conn:
             result = conn.execute(sa.text(self.sql))
             return result

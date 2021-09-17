@@ -1,4 +1,4 @@
---from sqlite:////opt/project/tests/tigerking.db
+--source sqlite:////opt/project/tests/tigerking.db
 --to   sqlite:////opt/project/tests/tigerking_new.db
 --name trainer
 SELECT

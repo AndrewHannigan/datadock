@@ -5,6 +5,8 @@ import logging
 
 from datadock import Statement
 
+logger = logging.getLogger(__name__)
+
 
 class Dock:
     def __init__(self, default_source_url=None, directory=None):
@@ -13,7 +15,7 @@ class Dock:
 
         self.statements = None
 
-        logging.info(f"Identified directory of Dock() object as: {self.directory}.")
+        logger.info(f"Identified directory of Dock() object as: {self.directory}.")
 
         self.reload()
 
