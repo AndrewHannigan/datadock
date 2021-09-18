@@ -20,7 +20,7 @@ class Dock:
         self.reload()
 
     def reload(self):
-        self.statements = [Statement(os.path.join(self.directory, f))
+        self.statements = [Statement(os.path.join(self.directory, f), default_source_url=self.default_source_url)
                            for f in os.listdir(self.directory) if re.match(".*[.]sql$", f)]
 
     def run_dag(self):
@@ -28,7 +28,7 @@ class Dock:
         dag_statements.sort()
 
         for s in dag_statements:
-            s(default_source_url=self.default_source_url)
+            s()
 
     def __getattr__(self, name):
         self.reload()

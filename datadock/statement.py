@@ -12,10 +12,15 @@ logger = logging.getLogger(__name__)
 
 @total_ordering
 class Statement:
-    def __init__(self, path: str):
+    def __init__(self, path: str, default_source_url: str = None):
         self.path = path
         self.filename = os.path.basename(self.path)
         self.name = re.sub("^[0-9][0-9]_", "", re.sub(".sql$", "", self.filename))
+        self.default_source_url = default_source_url
+
+        # Populated at runtime when run() is called
+        self.sql = None
+        self.source_url = None
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.path=}, {self.filename=}, {self.name=})"
@@ -23,8 +28,8 @@ class Statement:
     def __str__(self):
         return self.__repr__()
 
-    def __call__(self, default_source_url=None):
-        self.run(default_source_url=default_source_url)
+    def __call__(self):
+        self.run()
 
     def __gt__(self, other):
         return self.filename > other.filename
@@ -35,22 +40,19 @@ class Statement:
     def has_ordering_tag(self):
         return True if re.findall("^[0-9][0-9].*_", self.filename) else False
 
-    def reload(self):
+    def load(self):
         with open(self.path, "r") as f:
             self.sql = f.read()
 
         self.source_url = extract_flag_comment(self.sql, '--source')
 
-    def run(self, default_source_url=None):
-        self.reload()
+    def run(self):
+        self.load()
 
-        if not self.source_url:
-            if not default_source_url:
-                raise RuntimeError("No --source flag found in sql and no default_source_url specified.")
-            else:
-                self.source_url = default_source_url
+        if not self.source_url and not self.default_source_url:
+            raise RuntimeError("No --source flag found in sql and no default_source_url specified.")
 
-        engine = sa.create_engine(self.source_url)
+        engine = sa.create_engine(self.source_url or self.default_source_url)
 
         logger.info(f"Running {self.filename}")
         with engine.connect() as conn:
