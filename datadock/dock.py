@@ -9,11 +9,11 @@ logger = logging.getLogger(__name__)
 
 
 class Dock:
-    def __init__(self, default_source_url=None, directory=None):
+    def __init__(self, default_source_url=None, directory=None, scalarize=False):
         self.default_source_url = default_source_url
         self.directory = directory or os.path.dirname(inspect.stack()[1].filename)
-
         self.statements = None
+        self.scalarize = scalarize
 
         logger.info(f"Identified directory of Dock() object as: {self.directory}.")
 
@@ -22,7 +22,7 @@ class Dock:
         logger.info(f"Found statements {self.statements}")
 
     def reload(self):
-        self.statements = [Statement(os.path.join(self.directory, f), default_source_url=self.default_source_url)
+        self.statements = [Statement(os.path.join(self.directory, f), default_source_url=self.default_source_url, scalarize=self.scalarize)
                            for f in os.listdir(self.directory) if re.match(".*[.]sql$", f)]
 
     def run_dag(self):

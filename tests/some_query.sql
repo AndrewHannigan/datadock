@@ -1,2 +1,2 @@
 --source sqlite:////workspaces/datadock/tests/tigerking.db
-SELECT * FROM Trainer;
+SELECT trainer_id FROM Trainer;

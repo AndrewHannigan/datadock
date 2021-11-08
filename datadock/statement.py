@@ -12,11 +12,12 @@ logger = logging.getLogger(__name__)
 
 @total_ordering
 class Statement:
-    def __init__(self, path: str, default_source_url: str = None):
+    def __init__(self, path: str, default_source_url: str = None, scalarize = False):
         self.path = path
         self.filename = os.path.basename(self.path)
         self.name = re.sub("^[0-9][0-9]_", "", re.sub(".sql$", "", self.filename))
         self.default_source_url = default_source_url
+        self.scalarize = scalarize
 
         # Populated at runtime when run() is called
         self.sql = None
@@ -58,7 +59,11 @@ class Statement:
         with engine.connect() as conn:
             result = conn.execute(sa.text(self.sql))
             rows = result.fetchall()
-            return rows
+        
+        if rows and self.scalarize and len(rows[0]) == 1:
+            rows = [r[0] for r in rows]
+
+        return rows
 
 
 #TODO
