@@ -15,7 +15,7 @@ class Trainer(Base):
     tiger_skills = Column(Float())
 
 
-engine = create_engine("sqlite:///testing/tigerking.db", echo=True)
+engine = create_engine("sqlite:///workspaces/datadock/tests/tigerking.db", echo=True)
 Base.metadata.create_all(engine)
 
 trainers = [
