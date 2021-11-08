@@ -2,6 +2,7 @@ venv
 .idea
 *.db
 *.egg-info
-secrets/secret.json
-tests2/
 Dockerfile
+.vscode
+__pycache__
+.DS_Store

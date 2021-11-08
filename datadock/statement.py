@@ -29,7 +29,7 @@ class Statement:
         return self.__repr__()
 
     def __call__(self):
-        self.run()
+        return self.run()
 
     def __gt__(self, other):
         return self.filename > other.filename
@@ -57,9 +57,11 @@ class Statement:
         logger.info(f"Running {self.filename}")
         with engine.connect() as conn:
             result = conn.execute(sa.text(self.sql))
-            return result
+            rows = result.fetchall()
+            return rows
 
 
+#TODO
 class StatementReturn:
     def __init__(self, filename: str):
         self.filename = filename

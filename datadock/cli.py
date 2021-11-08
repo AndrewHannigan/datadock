@@ -9,11 +9,9 @@ def datadock():
 
 @datadock.command()
 @click.option('--url', default=str, help='Add default sqlalchemy engine url')
-@click.argument('filename', required=False)
+@click.argument('filename', required=True)
 def run(url, filename):
-    if filename:
-        stmt = Statement(filename=filename)
-        stmt.run()
-    else:
-        d = Dock(default_source_url=url, directory=os.getcwd())
-        d.run_dag()
+    stmt = Statement(filename=filename)
+    rows = stmt.run()
+    if rows:
+        print(rows)

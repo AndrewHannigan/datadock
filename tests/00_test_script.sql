@@ -1,5 +1,5 @@
---source sqlite:////opt/project/tests/tigerking.db
---to   sqlite:////opt/project/tests/tigerking_new.db
+--source sqlite:////workspaces/datadock/tests/tigerking.db
+--to   sqlite:////workspaces/datadock/tests/tigerking_new.db
 --name trainer
 SELECT
   first_name                   --type String(length=100)

@@ -19,6 +19,8 @@ class Dock:
 
         self.reload()
 
+        logger.info(f"Found statements {self.statements}")
+
     def reload(self):
         self.statements = [Statement(os.path.join(self.directory, f), default_source_url=self.default_source_url)
                            for f in os.listdir(self.directory) if re.match(".*[.]sql$", f)]
@@ -38,4 +40,3 @@ class Dock:
                 return s
 
         return super().__getattribute__(name)
-
