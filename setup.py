@@ -14,6 +14,10 @@ setuptools.setup(
     url="https://github.com/andrewhannigan/datadock",
     packages=setuptools.find_packages(),
     python_requires='>=3.8',
+    install_requires=[
+        "sqlparse",
+        "click"
+    ],
     entry_points = {
         'console_scripts': ['datadock=datadock.cli:datadock'],
     })
