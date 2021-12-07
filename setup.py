@@ -16,7 +16,8 @@ setuptools.setup(
     python_requires='>=3.8',
     install_requires=[
         "sqlparse",
-        "click"
+        "click",
+        "jinja2"
     ],
     entry_points = {
         'console_scripts': ['datadock=datadock.cli:datadock'],

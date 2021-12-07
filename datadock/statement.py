@@ -1,6 +1,7 @@
 import logging
 import os
 import re
+import jinja2
 from functools import total_ordering
 
 import sqlalchemy as sa
@@ -29,9 +30,9 @@ class Statement:
     def __str__(self):
         return self.__repr__()
 
-    def __call__(self):
-        return self.run()
-
+    def __call__(self, **kwargs):
+        return self.run(**kwargs)
+        
     def __gt__(self, other):
         return self.filename > other.filename
 
@@ -41,14 +42,15 @@ class Statement:
     def has_ordering_tag(self):
         return True if re.findall("^[0-9][0-9].*_", self.filename) else False
 
-    def load(self):
+    def load(self, **kwargs):
         with open(self.path, "r") as f:
-            self.sql = f.read()
+            template = f.read()
 
+        self.sql = jinja2.Template(template).render(kwargs)
         self.source_url = extract_flag_comment(self.sql, '--source')
 
-    def run(self):
-        self.load()
+    def run(self, **kwargs):
+        self.load(**kwargs)
 
         if not self.source_url and not self.default_source_url:
             raise RuntimeError("No --source flag found in sql and no default_source_url specified.")
