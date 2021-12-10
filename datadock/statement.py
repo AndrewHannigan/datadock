@@ -49,9 +49,13 @@ class Statement:
         self.sql = jinja2.Template(template).render(kwargs)
         self.source_url = extract_flag_comment(self.sql, '--source')
 
-    def run(self, **kwargs):
+    def run(self, dry=False, **kwargs):
         self.load(**kwargs)
-
+        
+        if dry:
+            print(self.sql)
+            return
+        
         if not self.source_url and not self.default_source_url:
             raise RuntimeError("No --source flag found in sql and no default_source_url specified.")
 
