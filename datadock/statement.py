@@ -49,10 +49,11 @@ class Statement:
         self.sql = jinja2.Template(template).render(kwargs)
         self.source_url = extract_flag_comment(self.sql, '--source')
 
-    def run(self, dry=False, **kwargs):
+    def run(self, **kwargs):
+        
         self.load(**kwargs)
         
-        if dry:
+        if 'dry' in kwargs and kwargs['dry']:
             print(self.sql)
             return
         
