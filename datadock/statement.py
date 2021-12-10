@@ -53,9 +53,14 @@ class Statement:
         
         self.load(**kwargs)
         
-        if 'dry' in kwargs and kwargs['dry']:
+        do_dry = 'dry' in kwargs and kwargs['dry'] 
+        do_print = 'print' in kwargs and kwargs['print']
+        if do_dry or do_print:
             print(self.sql)
+        
+        if do_dry:
             return
+
         
         if not self.source_url and not self.default_source_url:
             raise RuntimeError("No --source flag found in sql and no default_source_url specified.")
